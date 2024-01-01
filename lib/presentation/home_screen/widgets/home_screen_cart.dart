@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../../../constant/assert_image_path.dart';
+import '../../../data/model/video_model_data.dart';
 import '../../play_video_screen/play_video_screen.dart';
 
 class HomeScreenCart extends StatelessWidget {
-  const HomeScreenCart({
-    super.key,
-  });
-
+  const HomeScreenCart({super.key, required this.videoDataResults});
+  final VideoDataResults videoDataResults;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, PlayVideoScreen.routeName);
+        Navigator.pushNamed(context, PlayVideoScreen.routeName,
+            arguments: videoDataResults);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -34,8 +34,7 @@ class HomeScreenCart extends StatelessWidget {
                     child: FadeInImage.assetNetwork(
                       placeholder: AssertImagePath.loadingAnimation,
                       fit: BoxFit.cover,
-                      image:
-                          "https://mahfilbucket.s3.amazonaws.com/media_test/video_content_thumbnail/mob_thumbnail_HcaCk3ZbD1_1920x1080_7.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5G25YRBXUVQTFY73%2F20231231%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20231231T132538Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=893f443ffa2d5e2616f811872b0825b7997a474165d2fd489e018acd06439903",
+                      image: videoDataResults.thumbnail,
                     ),
                   ),
                   Positioned(
@@ -47,7 +46,7 @@ class HomeScreenCart extends StatelessWidget {
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "3:16",
+                            videoDataResults.duration,
                             style: TextStyle(color: Colors.white),
                           )))
                 ],
@@ -56,6 +55,9 @@ class HomeScreenCart extends StatelessWidget {
                 height: 10,
               ),
               ListTile(
+                contentPadding: EdgeInsets.only(
+                  right: 15,
+                ),
                 leading: Container(
                   width: 60,
                   height: 60,
@@ -65,13 +67,13 @@ class HomeScreenCart extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.fill,
                       image: NetworkImage(
-                        "https://mahfilbucket.s3.amazonaws.com/media_test/video_content_thumbnail/mob_thumbnail_HcaCk3ZbD1_1920x1080_7.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5G25YRBXUVQTFY73%2F20231231%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20231231T132538Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=893f443ffa2d5e2616f811872b0825b7997a474165d2fd489e018acd06439903",
+                        videoDataResults.channelImage,
                       ),
                     ),
                   ),
                 ),
                 title: Text(
-                  "তাকদীর বা ভাগ্য কি পরিবর্তন করা যায়_ আবু ত্ব-হা মুহাম্মদ আদনান __ Abu Toha Muhammad Adnan",
+                  videoDataResults.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -87,17 +89,17 @@ class HomeScreenCart extends StatelessWidget {
               ),
               Row(children: [
                 SizedBox(
-                  width: 90,
+                  width: 70,
                 ),
                 Text(
-                  "53,500, Views",
+                  "${videoDataResults.viewers} Views",
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Text(
-                  "53,500, Views",
+                  videoDataResults.dateAndTime,
                   style: TextStyle(color: Colors.grey),
                 ),
               ]),

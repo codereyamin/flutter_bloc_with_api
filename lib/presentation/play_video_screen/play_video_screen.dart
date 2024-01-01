@@ -3,13 +3,14 @@ import 'package:flutter_bloc_with_api/constant/assert_icon_image_path.dart';
 import 'package:flutter_bloc_with_api/presentation/play_video_screen/widgets/comment_cart.dart';
 
 import '../../constant/assert_image_path.dart';
+import '../../data/model/video_model_data.dart';
 import '../../res/text_style.dart';
 import 'widgets/video_play_info_cart.dart';
 
 class PlayVideoScreen extends StatelessWidget {
   static const String routeName = "play-video-screen";
-  const PlayVideoScreen({super.key});
-
+  const PlayVideoScreen({super.key, required this.videoDataResults});
+  final VideoDataResults videoDataResults;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +22,7 @@ class PlayVideoScreen extends StatelessWidget {
               color: Colors.amber,
             ),
             ListTile(
-              title: Text(
-                  "সে যদি দুই রাকাত নামাজ পড়ে সে যদি দুই রাকাত নামাজ পড়ে_ সে যদি দুই রাকাত নামাজ পড়ে Abu Taha Muhammad Adnan_ _Message of Life_"),
+              title: Text(videoDataResults.title),
             ),
             Row(
               children: [
@@ -30,14 +30,14 @@ class PlayVideoScreen extends StatelessWidget {
                   width: 24,
                 ),
                 Text(
-                  "fjkghdh fkhfgh",
+                  "${videoDataResults.viewers} Views",
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Text(
-                  "fjkghdh fkhfgh",
+                  videoDataResults.dateAndTime,
                   style: TextStyle(color: Colors.grey),
                 ),
               ],
@@ -51,18 +51,22 @@ class PlayVideoScreen extends StatelessWidget {
                 VideoPlayInfoCart(
                   imagePath: AssertIconImagePath.love,
                   title: "MASH AllAH",
+                  onTa: () {},
                 ),
                 VideoPlayInfoCart(
                   imagePath: AssertIconImagePath.like,
                   title: "LIKE (12k)",
+                  onTa: () {},
                 ),
                 VideoPlayInfoCart(
                   imagePath: AssertIconImagePath.share,
                   title: "SHARE",
+                  onTa: () {},
                 ),
                 VideoPlayInfoCart(
                   imagePath: AssertIconImagePath.report,
                   title: "REPORT",
+                  onTa: () {},
                 ),
               ],
             ),
@@ -86,18 +90,17 @@ class PlayVideoScreen extends StatelessWidget {
                     height: 60,
                     placeholder: AssertImagePath.loadingAnimation,
                     fit: BoxFit.fill,
-                    image:
-                        "https://mahfilbucket.s3.amazonaws.com/media_test/video_content_thumbnail/mob_thumbnail_HcaCk3ZbD1_1920x1080_7.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5G25YRBXUVQTFY73%2F20231231%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20231231T132538Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=893f443ffa2d5e2616f811872b0825b7997a474165d2fd489e018acd06439903",
+                    image: videoDataResults.channelImage,
                   ),
                 ),
                 title: Text(
-                  "তাকদীর বা ভাগ্য কি পরিবর্তন করা যায়_ আবু ত্ব-হা মুহাম্মদ আদনান __ Abu Toha Muhammad Adnan",
+                  videoDataResults.channelName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                 ),
                 subtitle: Text(
-                    "তাকদীর বা ভাগ্য কি পরিবর্তন করা যায়_ আবু ত্ব-হা মুহাম্মদ আদনান __ Abu Toha Muhammad Adnan",
+                    "${videoDataResults.channelSubscriber}  Subscribe",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.primaryTextStyle),
@@ -135,7 +138,7 @@ class PlayVideoScreen extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        "Comments",
+                        "7.5k",
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 12,

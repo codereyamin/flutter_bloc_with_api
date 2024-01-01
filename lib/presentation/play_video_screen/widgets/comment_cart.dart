@@ -57,7 +57,7 @@ class CommentCart extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 10 * 8,
                 child: Text(
-                  "তাকদীর বা ভাগ্য কি পরিবর্তন করা যায়_ আবু ত্ব-হা মুহাম্মদ আদনান __ Abu Toha Muhammad Adnan তাকদীর বা ভাগ্য কি পরিবর্তন করা যায়_ আবু ত্ব-হা মুহাম্মদ আদনান __ Abu Toha Muhammad Adnan",
+                  "তাকদীর বা ভাগ্য কি পরিবর্তন করা যায়_ আবু ত্ব-হা মুহাম্মদ আদনান __ Abu Toha Muhammad Adnan ",
                   style: AppTextStyle.secondaryTextStyle,
                 ),
               )
