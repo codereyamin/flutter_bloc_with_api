@@ -4,11 +4,11 @@ import 'package:flutter_bloc_with_api/constant/app_api_url.dart';
 
 import '../model/video_model_data.dart';
 
-class HomePageVideoData {
-  HomePageVideoData._();
+///////////// remote data call this array
+class HomePageRemoteVideoData {
+  HomePageRemoteVideoData._();
 
   static Future<VideoModelData?> getData() async {
-    print("call data");
     final Dio dio = Dio();
     late VideoModelData data;
     try {

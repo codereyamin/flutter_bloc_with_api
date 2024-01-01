@@ -6,21 +6,24 @@ import 'package:video_player/video_player.dart';
 import '../../constant/assert_image_path.dart';
 import '../../data/model/video_model_data.dart';
 import '../../res/text_style.dart';
-import 'widgets/video_play_info_cart.dart';
+import '../../res/time_formate.dart';
+import 'widgets/video_play_info_icon_button.dart';
 
 class PlayVideoScreen extends StatefulWidget {
-  static const String routeName = "play-video-screen";
+  static const String routeName =
+      "play-video-screen"; ////////////// route name define
   const PlayVideoScreen({super.key, required this.videoDataResults});
-  final VideoDataResults videoDataResults;
+  final VideoDataResults videoDataResults; /////////// video data result define
 
   @override
   State<PlayVideoScreen> createState() => _PlayVideoScreenState();
 }
 
 class _PlayVideoScreenState extends State<PlayVideoScreen> {
-  late FlickManager flickManager;
+  late FlickManager flickManager; //////////  video player instant
   @override
   void initState() {
+    ////////////// video player initialize
     flickManager = FlickManager(
       videoPlayerController: VideoPlayerController.networkUrl(
           Uri.parse(widget.videoDataResults.manifest)),
@@ -30,6 +33,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
 
   @override
   void dispose() {
+    /////////////// video player when not use then dispose or remove
     flickManager.dispose();
     super.dispose();
   }
@@ -38,8 +42,10 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        /////////////// all screen scrollable
         child: SingleChildScrollView(
           child: Column(children: [
+            /////////////  video player
             FittedBox(
               child: SizedBox(
                 height: 230,
@@ -48,69 +54,81 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                 ),
               ),
             ),
+
+            ///////////// video title
             ListTile(
               title: Text(widget.videoDataResults.title),
             ),
+
+            /////////// total views & publishing date
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 24,
                 ),
                 Text(
                   "${widget.videoDataResults.viewers} Views",
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
+
+                //////////// publishing date formate
                 Text(
-                  widget.videoDataResults.dateAndTime,
-                  style: TextStyle(color: Colors.grey),
+                  getTimeFormate(widget.videoDataResults.dateAndTime),
+                  style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 10, /////// using Space
             ),
+
+            /////////////// all icon button
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                VideoPlayInfoCart(
+                VideoPlayInfoIconButton(
                   imagePath: AssertIconImagePath.love,
                   title: "MASH AllAH",
                   onTa: () {},
                 ),
-                VideoPlayInfoCart(
+                VideoPlayInfoIconButton(
                   imagePath: AssertIconImagePath.like,
                   title: "LIKE (12k)",
                   onTa: () {},
                 ),
-                VideoPlayInfoCart(
+                VideoPlayInfoIconButton(
                   imagePath: AssertIconImagePath.share,
                   title: "SHARE",
                   onTa: () {},
                 ),
-                VideoPlayInfoCart(
+                VideoPlayInfoIconButton(
                   imagePath: AssertIconImagePath.report,
                   title: "REPORT",
                   onTa: () {},
                 ),
               ],
             ),
+
+            /////////////// channel profile
             Container(
-              padding: EdgeInsets.only(top: 10, bottom: 12),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.only(top: 10, bottom: 12),
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
+                    ////////// channel profile bottom separate margin
                     color: Colors.grey,
                   ),
                 ),
               ),
               child: ListTile(
                 dense: true,
-                contentPadding: EdgeInsets.only(left: 5, right: 10),
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 minLeadingWidth: 50,
                 leading: ClipRRect(
+                  //////////////// channel profile image
                   borderRadius: BorderRadius.circular(200),
                   child: FadeInImage.assetNetwork(
                     width: 50,
@@ -120,39 +138,47 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                     image: widget.videoDataResults.channelImage,
                   ),
                 ),
+                //////////////// channel name
+                ///
                 title: Text(
                   widget.videoDataResults.channelName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500, fontSize: 14),
                 ),
+                //////////////// channel subscribe count
                 subtitle: Text(
                     "${widget.videoDataResults.channelSubscriber}  Subscribe",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.primaryTextStyle),
+
+                /////////// channel subscribe button
+                ///
                 trailing: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        maximumSize: Size(110, 50),
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        backgroundColor: Color(0xff3898FC),
-                        foregroundColor: Color(0xffFFFFFF),
+                        maximumSize: const Size(110, 50),
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        backgroundColor: const Color(0xff3898FC),
+                        foregroundColor: const Color(0xffFFFFFF),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4))),
                     onPressed: () {},
-                    icon: Icon(Icons.add),
-                    label: Text(
+                    icon: const Icon(Icons.add),
+                    label: const Text(
                       "Subscribe",
                       style: TextStyle(fontSize: 12),
                     )),
               ),
             ),
+            /////////////// total comment
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Text(
                         "Comments",
@@ -182,39 +208,41 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                 ],
               ),
             ),
+
+            //////////////// comment input field box
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
                 decoration: InputDecoration(
-                    constraints: BoxConstraints(maxHeight: 50),
+                    constraints: const BoxConstraints(maxHeight: 50),
                     hintText: "Add Comment",
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: const TextStyle(color: Colors.grey),
                     isDense: true,
                     suffixIcon: IconButton(
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.send,
                           color: Color(0xff718096),
                         )),
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
                         color: Colors.grey,
                       ),
                     ),
-                    disabledBorder: OutlineInputBorder(
+                    disabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 4,
                         color: Colors.grey,
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2,
                         color: Colors.grey,
                       ),
                     ),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2,
                         color: Colors.grey,
@@ -222,10 +250,12 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                     )),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            CommentCart()
+
+            ///////////////  in per comment comment locks
+            const CommentCart()
           ]),
         ),
       ),

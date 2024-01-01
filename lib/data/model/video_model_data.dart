@@ -1,3 +1,9 @@
+///////////// all app use this model
+///  use json to dart
+
+////// note primary data type define dynamic
+//////
+//////
 class VideoModelData {
   dynamic links;
   dynamic total;

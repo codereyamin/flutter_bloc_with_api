@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_with_api/res/colors.dart';
 
 class AppTextStyle {
   AppTextStyle._();
@@ -6,18 +7,19 @@ class AppTextStyle {
   static const TextStyle primaryTextStyle = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 11,
-    color: Colors.grey,
+    color: AppColor.primaryBlackColor,
   );
 
 //////////// secondary text style
   static const TextStyle secondaryTextStyle = TextStyle(
-    color: Color(0xff718096),
+    color: AppColor.primaryGrayColor,
     fontSize: 12,
     fontWeight: FontWeight.w500,
   );
+  //////////// secondary two text style
   static const TextStyle secondaryTwoTextStyle = TextStyle(
-    color: Color(0xff718096),
-    fontSize: 12,
+    color: AppColor.primaryGrayColor,
+    fontSize: 8,
     fontWeight: FontWeight.w400,
   );
 }

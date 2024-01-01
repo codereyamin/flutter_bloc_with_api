@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_with_api/res/colors.dart';
 
 import '../../../constant/assert_image_path.dart';
 import '../../../data/model/video_model_data.dart';
+import '../../../res/time_formate.dart';
 import '../../play_video_screen/play_video_screen.dart';
 
 class HomeScreenCart extends StatelessWidget {
@@ -9,102 +11,126 @@ class HomeScreenCart extends StatelessWidget {
   final VideoDataResults videoDataResults;
   @override
   Widget build(BuildContext context) {
+    /////// screen size & height with pic using mediaQuery
+    ///
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, PlayVideoScreen.routeName,
-            arguments: videoDataResults);
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        ///////// full cart design with wite color
+        decoration: const BoxDecoration(
+          color: AppColor.primaryWiteColor,
+        ),
         child: Column(children: [
-          Container(
-            height: height / 3,
-            width: width,
-            decoration: BoxDecoration(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, PlayVideoScreen.routeName,
+                  arguments:
+                      videoDataResults); ///// click image navigate play video screen
+            },
+            child: Stack(
+              children: [
+                //////////  show cart image
+                SizedBox(
+                  width: width,
+                  height: height / 4.5,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: AssertImagePath.loadingAnimation,
+                    fit: BoxFit.cover,
+                    image: videoDataResults.thumbnail,
+                  ),
+                ),
+
+                ////////// show video duration
+                Positioned(
+                  bottom: 10,
+                  right: 10,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Text(
+                      videoDataResults.duration,
+                      style: const TextStyle(color: AppColor.primaryWiteColor),
+                    ),
+                  ),
+                )
+              ],
             ),
-            child: Column(children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: width,
-                    height: height / 4.7,
-                    child: FadeInImage.assetNetwork(
-                      placeholder: AssertImagePath.loadingAnimation,
-                      fit: BoxFit.cover,
-                      image: videoDataResults.thumbnail,
-                    ),
-                  ),
-                  Positioned(
-                      bottom: 10,
-                      right: 10,
-                      child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Text(
-                            videoDataResults.duration,
-                            style: TextStyle(color: Colors.white),
-                          )))
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.only(
-                  right: 15,
-                ),
-                leading: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(
-                        videoDataResults.channelImage,
-                      ),
-                    ),
+          ),
+
+          /////////////
+          /// show channel profile
+          ListTile(
+            contentPadding: const EdgeInsets.only(
+              right: 15,
+              top: 10,
+            ),
+            ///////// channel image
+            leading: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: AppColor.primaryBlackColor,
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(
+                    videoDataResults.channelImage,
                   ),
                 ),
-                title: Text(
-                  videoDataResults.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: SizedBox(
-                  width: 5,
-                  child: PopupMenuButton(
-                      padding: EdgeInsets.all(0),
-                      iconColor: Colors.grey,
-                      iconSize: 30,
-                      itemBuilder: (_) => const <PopupMenuItem<String>>[],
-                      onSelected: (_) {}),
-                ),
               ),
-              Row(children: [
-                SizedBox(
-                  width: 70,
-                ),
-                Text(
-                  "${videoDataResults.viewers} Views",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  videoDataResults.dateAndTime,
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ]),
+            ),
+
+            /////////// video title
+            title: Text(
+              videoDataResults.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+
+            //////////////// total view & dateTime
+            subtitle: Row(children: [
+              Text(
+                "${videoDataResults.viewers} Views",
+                style: const TextStyle(color: Colors.grey),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                getTimeFormate(videoDataResults.dateAndTime),
+                style: const TextStyle(color: Colors.grey),
+              ),
             ]),
-          )
+
+            ///////////// popup button
+            trailing: SizedBox(
+              width: 15,
+              child: PopupMenuButton(
+                  padding: const EdgeInsets.all(0),
+                  iconColor: Colors.grey,
+                  iconSize: 30,
+                  itemBuilder: (_) => const <PopupMenuItem<String>>[
+                        ////////////// this item ui make
+                        PopupMenuItem(
+                          value: "Test Item 1",
+                          child: Text("Test Item 1"),
+                        ),
+                        PopupMenuItem(
+                          value: "Test Item 2",
+                          child: Text("Test Item 2"),
+                        ),
+                        PopupMenuItem(
+                          value: "Test Item 3",
+                          child: Text("Test Item 3"),
+                        ),
+                      ],
+                  onSelected: (_) {}),
+            ),
+          ),
         ]),
       ),
     );
