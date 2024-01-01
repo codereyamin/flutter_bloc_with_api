@@ -1,28 +1,55 @@
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_with_api/constant/assert_icon_image_path.dart';
 import 'package:flutter_bloc_with_api/presentation/play_video_screen/widgets/comment_cart.dart';
-
+import 'package:video_player/video_player.dart';
 import '../../constant/assert_image_path.dart';
 import '../../data/model/video_model_data.dart';
 import '../../res/text_style.dart';
 import 'widgets/video_play_info_cart.dart';
 
-class PlayVideoScreen extends StatelessWidget {
+class PlayVideoScreen extends StatefulWidget {
   static const String routeName = "play-video-screen";
   const PlayVideoScreen({super.key, required this.videoDataResults});
   final VideoDataResults videoDataResults;
+
+  @override
+  State<PlayVideoScreen> createState() => _PlayVideoScreenState();
+}
+
+class _PlayVideoScreenState extends State<PlayVideoScreen> {
+  late FlickManager flickManager;
+  @override
+  void initState() {
+    flickManager = FlickManager(
+      videoPlayerController: VideoPlayerController.networkUrl(
+          Uri.parse(widget.videoDataResults.manifest)),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    flickManager.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
-            Container(
-              height: 230,
-              color: Colors.amber,
+            FittedBox(
+              child: SizedBox(
+                height: 230,
+                child: FlickVideoPlayer(
+                  flickManager: flickManager,
+                ),
+              ),
             ),
             ListTile(
-              title: Text(videoDataResults.title),
+              title: Text(widget.videoDataResults.title),
             ),
             Row(
               children: [
@@ -30,14 +57,14 @@ class PlayVideoScreen extends StatelessWidget {
                   width: 24,
                 ),
                 Text(
-                  "${videoDataResults.viewers} Views",
+                  "${widget.videoDataResults.viewers} Views",
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Text(
-                  videoDataResults.dateAndTime,
+                  widget.videoDataResults.dateAndTime,
                   style: TextStyle(color: Colors.grey),
                 ),
               ],
@@ -90,17 +117,17 @@ class PlayVideoScreen extends StatelessWidget {
                     height: 60,
                     placeholder: AssertImagePath.loadingAnimation,
                     fit: BoxFit.fill,
-                    image: videoDataResults.channelImage,
+                    image: widget.videoDataResults.channelImage,
                   ),
                 ),
                 title: Text(
-                  videoDataResults.channelName,
+                  widget.videoDataResults.channelName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                 ),
                 subtitle: Text(
-                    "${videoDataResults.channelSubscriber}  Subscribe",
+                    "${widget.videoDataResults.channelSubscriber}  Subscribe",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.primaryTextStyle),

@@ -10,7 +10,6 @@ class HomeCubit extends Cubit<List<VideoDataResults>> {
   }
 
   fetchData() async {
-    print("call data");
     var data = await HomeScreenRepo().fetchData();
     if (data != null || data.isNotEmpty) {
       emit(data);

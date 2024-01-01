@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_with_api/presentation/home_screen/home_screen.dart';
-
 import 'cubit/home/home_cubit.dart';
 import 'routes/app_routes.dart';
 
