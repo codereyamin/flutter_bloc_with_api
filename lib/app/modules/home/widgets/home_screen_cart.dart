@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_with_api/res/colors.dart';
+import 'package:flutter_bloc_with_api/app/routes/app_pages.dart';
+import 'package:flutter_bloc_with_api/constant/assert_image_path.dart';
+import 'package:flutter_bloc_with_api/utils/colors.dart';
+import 'package:flutter_bloc_with_api/utils/time_formate.dart';
+import 'package:get/get.dart';
 
-import '../../../constant/assert_image_path.dart';
-import '../../../data/model/video_model_data.dart';
-import '../../../res/time_formate.dart';
-import '../../play_video_screen/play_video_screen.dart';
+import '../../../../data/model/video_model_data.dart';
 
 class HomeScreenCart extends StatelessWidget {
   const HomeScreenCart({super.key, required this.videoDataResults});
@@ -25,9 +26,7 @@ class HomeScreenCart extends StatelessWidget {
         child: Column(children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, PlayVideoScreen.routeName,
-                  arguments:
-                      videoDataResults); ///// click image navigate play video screen
+              Get.toNamed(Routes.VIDEO_PLAYER, arguments: videoDataResults);
             },
             child: Stack(
               children: [

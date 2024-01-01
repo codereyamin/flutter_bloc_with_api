@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_with_api/res/text_style.dart';
+import 'package:flutter_bloc_with_api/utils/text_style.dart';
 
-import '../../../constant/assert_image_path.dart';
+import '../../../../constant/assert_image_path.dart';
 
 ////////////// comment cart
 class CommentCart extends StatelessWidget {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_with_api/presentation/home_screen/home_screen.dart';
-import 'package:flutter_bloc_with_api/res/theme_data.dart';
-import 'cubit/home/home_cubit.dart';
-import 'routes/app_routes.dart';
+import 'package:flutter_bloc_with_api/app/routes/app_pages.dart';
+import 'package:flutter_bloc_with_api/utils/themes.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,15 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeCubit(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Bloc with api',
-        theme: themeData,
-        initialRoute: HomeScreen.routeName,
-        onGenerateRoute: AppRouter.generateRoute,
-      ),
+    return GetMaterialApp(
+      title: "flutter api app",
+      theme: themeData,
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
     );
   }
 }

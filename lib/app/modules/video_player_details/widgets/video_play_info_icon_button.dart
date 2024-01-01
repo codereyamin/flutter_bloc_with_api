@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_with_api/res/text_style.dart';
+import 'package:flutter_bloc_with_api/utils/text_style.dart';
 
 class VideoPlayInfoIconButton extends StatelessWidget {
   const VideoPlayInfoIconButton({
@@ -17,7 +17,7 @@ class VideoPlayInfoIconButton extends StatelessWidget {
     return InkWell(
       onTap: onTa, /////////// function
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(width: 1, color: Colors.grey)),

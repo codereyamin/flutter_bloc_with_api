@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_with_api/res/colors.dart';
+import 'package:flutter_bloc_with_api/utils/colors.dart';
 
 class AppTextStyle {
   AppTextStyle._();

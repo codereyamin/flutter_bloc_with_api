@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_with_api/constant/app_api_url.dart';
-
-import '../model/video_model_data.dart';
+import 'package:flutter_bloc_with_api/data/model/video_model_data.dart';
 
 ///////////// remote data call this array
 class HomePageRemoteVideoData {
